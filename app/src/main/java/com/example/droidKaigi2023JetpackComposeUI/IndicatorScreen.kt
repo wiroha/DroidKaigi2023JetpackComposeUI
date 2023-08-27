@@ -45,7 +45,6 @@ fun IndicatorScreen(modifier: Modifier = Modifier) {
 
         CircularProgressIndicator()
 
-        /*
         Text(
             text = "Custom CircularProgressIndicator",
             style = MaterialTheme.typography.displayMedium,
@@ -83,8 +82,6 @@ fun IndicatorScreen(modifier: Modifier = Modifier) {
                 strokeCap = StrokeCap.Round
             )
         }
-
-         */
 
         Spacer(modifier = Modifier.height(16.dp))
 

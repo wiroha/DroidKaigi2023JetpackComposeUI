@@ -150,14 +150,3 @@ fun PreviewAboutCoordinate() {
         }
     }
 }
-
-/*
-@Preview(showBackground = true)
-@Composable
-fun ReadMoreScreenPreview() {
-    DroidKaigi2023JetpackComposeUITheme {
-        ReadMoreScreen()
-    }
-}
-
- */
