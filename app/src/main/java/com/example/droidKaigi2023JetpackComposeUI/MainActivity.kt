@@ -32,8 +32,8 @@ sealed class Screen(val route: String, val title: String) {
     object Carousel: Screen(route = "carousel_screen", "Carousel")
     object Accordion: Screen(route = "accordion_screen", "Accordion")
     object StickyHeader: Screen(route = "sticky_header_screen", "StickyHeader")
-    object ShowMoreScreen: Screen(route = "show_more_screen", "ShowMoreScreen")
-    object AnchorLink: Screen(route = "anchor_link_screen", "AnchorLink")
+    object ShowMore: Screen(route = "show_more_screen", "ShowMoreScreen")
+    object Scroll: Screen(route = "scroll_screen", "Scroll")
 }
 
 @Composable
@@ -49,8 +49,8 @@ fun AppNavigator() {
         composable(Screen.Carousel.route) { CarouselScreen() }
         composable(Screen.Accordion.route) { AccordionScreen() }
         composable(Screen.StickyHeader.route) { StickyHeaderScreen() }
-        composable(Screen.ShowMoreScreen.route) { ShowMoreScreen() }
-        composable(Screen.AnchorLink.route) { AnchorLinkScreen() }
+        composable(Screen.ShowMore.route) { ShowMoreScreen() }
+        composable(Screen.Scroll.route) { ScrollScreen() }
     }
 }
 

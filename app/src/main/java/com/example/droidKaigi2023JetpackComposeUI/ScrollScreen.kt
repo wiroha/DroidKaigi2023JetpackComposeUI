@@ -7,14 +7,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -27,7 +32,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
-fun AnchorLinkScreen() {
+fun ScrollScreen() {
     Column(
         modifier = Modifier.padding(
             horizontal = 8.dp,
@@ -35,20 +40,67 @@ fun AnchorLinkScreen() {
         )
     ) {
         Text(
-            text = "AnchorLink Screen",
+            text = "Scroll Screen",
             style = MaterialTheme.typography.displayMedium,
             modifier = Modifier.padding(vertical = 8.dp)
         )
 
-        SmoothScrollToIdExample()
+        ScrollSample()
     }
 }
 
 @Composable
-fun SmoothScrollToIdExample() {
+fun LazyColumnScrollSample() {
+    val coroutineScope = rememberCoroutineScope()
+    val lazyListState = rememberLazyListState()
+    var step3Position by remember { mutableStateOf(0) }
+
+    LazyColumn(
+        state = lazyListState,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        item {
+            Text(
+                text = "〇〇の方はStep 3へ",
+                style = MaterialTheme.typography.displayLarge,
+                textDecoration = TextDecoration.Underline,
+                color = Color.Magenta,
+                modifier = Modifier.clickable {
+                    coroutineScope.launch {
+                        lazyListState.animateScrollToItem(step3Position)
+                    }
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        items(10) { index ->
+            val i = index + 1
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(144.dp)
+                    .padding(bottom = 16.dp)
+                    .onGloballyPositioned { coordinates ->
+                        if (i == 3) {
+                            step3Position = index
+                        }
+                    }
+            ) {
+                Text(
+                    text = "Step $i\nxxxxxxxxxxx",
+                    style = MaterialTheme.typography.displayMedium,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
+    }
+}
+@Composable
+fun ScrollSample() {
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
-    val positions = remember { mutableMapOf<String, Int>() }
+    var step3Position by remember { mutableStateOf(0) }
 
     Column(
         modifier = Modifier
@@ -61,10 +113,8 @@ fun SmoothScrollToIdExample() {
             textDecoration = TextDecoration.Underline,
             color = Color.Magenta,
             modifier = Modifier.clickable {
-                positions["item3"]?.let { target ->
-                    coroutineScope.launch {
-                        scrollState.animateScrollTo(target)
-                    }
+                coroutineScope.launch {
+                    scrollState.animateScrollTo(step3Position)
                 }
             }
         )
@@ -78,8 +128,9 @@ fun SmoothScrollToIdExample() {
                     .height(144.dp)
                     .padding(bottom = 16.dp)
                     .onGloballyPositioned { coordinates ->
-                        val position = coordinates.positionInParent().y.roundToInt()
-                        positions["item$i"] = position
+                        if (i == 3) {
+                            step3Position = coordinates.positionInParent().y.roundToInt()
+                        }
                     }
             ) {
                 Text(
@@ -94,8 +145,8 @@ fun SmoothScrollToIdExample() {
 
 @Preview(showBackground = true)
 @Composable
-fun AnchorLinkScreenPreview() {
+fun ScrollScreenPreview() {
     DroidKaigi2023JetpackComposeUITheme {
-        AnchorLinkScreen()
+        ScrollScreen()
     }
 }

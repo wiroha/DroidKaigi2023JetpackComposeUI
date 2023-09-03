@@ -25,7 +25,7 @@ fun HomeScreen(navController: NavHostController) {
 
         val list = listOf(
             Screen.Indicator, Screen.BottomNavigation, Screen.BottomSheet, Screen.CreditCard,
-            Screen.Carousel, Screen.Accordion, Screen.StickyHeader, Screen.ShowMoreScreen, Screen.AnchorLink
+            Screen.Carousel, Screen.Accordion, Screen.StickyHeader, Screen.ShowMore, Screen.Scroll
         )
 
         list.forEach { screen ->
