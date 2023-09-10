@@ -71,4 +71,5 @@ lint/reports/
 
 # Other
 *.hprof
+.DS_Store
 
